@@ -4,7 +4,9 @@ import PantallaPendiente from './components/layout/PantallaPendiente'
 import ProtectedRoute from './auth/ProtectedRoute'
 import RoleRoute from './auth/RoleRoute'
 import ForbiddenPage from './features/errores/ForbiddenPage'
+import InicioPage from './features/inicio/InicioPage'
 import LoginPage from './features/login/LoginPage'
+import ReporteSemanalPage from './features/reporteSemanal/ReporteSemanalPage'
 import UiKitPage from './features/uiKit/UiKitPage'
 import useSessionStore from './store/sessionStore'
 import { ROLES, rutaInicioDe } from './auth/roles'
@@ -20,8 +22,8 @@ const { PROFESOR, JEFA, DIRECTIVOS } = ROLES
  * definitiva y está cubierta por los tests.
  */
 export const RUTAS_PROTEGIDAS = [
-  { path: '/inicio', allow: [PROFESOR], titulo: 'Inicio del docente', fase: 'Fase 3' },
-  { path: '/reporte-semanal', allow: [PROFESOR], titulo: 'Reporte semanal y rúbrica', fase: 'Fase 3' },
+  { path: '/inicio', allow: [PROFESOR], titulo: 'Inicio del docente', elemento: <InicioPage /> },
+  { path: '/reporte-semanal', allow: [PROFESOR], titulo: 'Reporte semanal y rúbrica', elemento: <ReporteSemanalPage /> },
   { path: '/registro-vuelo', allow: [PROFESOR, JEFA], titulo: 'Registro de vuelo — histórico', fase: 'Fase 4' },
   { path: '/registro-vuelo/nuevo', allow: [PROFESOR], titulo: 'Registrar evaluación diagnóstica', fase: 'Fase 4' },
   { path: '/estudiantes', allow: [PROFESOR, JEFA, DIRECTIVOS], titulo: 'Estudiantes', fase: 'Fase 5' },

@@ -59,7 +59,8 @@ describe('LoginPage', () => {
     await userEvent.type(screen.getByLabelText(/Contraseña/), CLAVE_DEMO)
     await userEvent.click(screen.getByRole('button', { name: 'Ingresar' }))
 
-    expect(await screen.findByRole('heading', { name: 'Inicio del docente' })).toBeInTheDocument()
+    // El saludo del panel cambia con la hora; "Accesos rápidos" no.
+    expect(await screen.findByRole('heading', { name: 'Accesos rápidos' })).toBeInTheDocument()
     // RNF-003: el token se respalda en sessionStorage, nunca en localStorage.
     expect(sessionStorage.getItem('sicedu.token')).toBeTruthy()
     expect(localStorage.getItem('sicedu.token')).toBeNull()

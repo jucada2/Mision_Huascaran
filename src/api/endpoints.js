@@ -30,6 +30,14 @@ export const ENDPOINTS = {
     historial: (id) => `/alumnos/${id}/historial`,
   },
 
+  // El panel del docente (P3) necesita sus asignaciones del periodo vigente y el
+  // avance de la semana. §3 no lista ninguna ruta para eso; estas dos son la
+  // propuesta del frontend y hay que contrastarlas con el equipo de backend.
+  docentes: {
+    asignaciones: (id) => `/docentes/${id}/asignaciones`, // ?periodo=
+    resumen: (id) => `/docentes/${id}/resumen`, // ?periodo=&semana=
+  },
+
   reporteSemanal: {
     listar: '/reporte-semanal', // ?semana=&colegio=&grado=
     crear: '/reporte-semanal',

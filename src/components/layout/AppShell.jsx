@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
+import useOfflineQueue from '../../hooks/useOfflineQueue'
 import Topbar from './Topbar'
 
 /**
@@ -12,6 +13,8 @@ import Topbar from './Topbar'
  */
 export default function AppShell() {
   const [menuAbierto, setMenuAbierto] = useState(false)
+  // Carga la cola guardada en IndexedDB y reanuda los envíos pendientes (RNF-001).
+  useOfflineQueue()
   const { pathname } = useLocation()
 
   return (

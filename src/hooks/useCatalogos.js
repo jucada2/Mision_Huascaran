@@ -27,8 +27,23 @@ export const useEsperadoPorGrado = () => useCatalogo(['catalogo', 'esperado-por-
 export const usePeriodos = () => useCatalogo(['catalogo', 'periodos'], obtenerPeriodos)
 export const useSemanas = () => useCatalogo(['catalogo', 'semanas'], obtenerSemanas)
 
-/** Niveles de rúbrica del programa del alumno (P5). Sin programa no consulta. */
+/**
+ * Niveles de rúbrica (P5). Con `idPrograma` trae los de ese programa; sin él,
+ * el catálogo completo, que es lo que necesita una grilla donde conviven
+ * alumnos de Alfabetización y de Comprensión Lectora. En los dos casos las
+ * opciones vienen del backend: nunca se escriben en el código (RN-011).
+ */
 export const useNivelesRubrica = (idPrograma) =>
-  useCatalogo(['catalogo', 'niveles-rubrica', idPrograma ?? 'todos'], () => obtenerNivelesRubrica(idPrograma), {
-    enabled: idPrograma != null,
-  })
+  useCatalogo(['catalogo', 'niveles-rubrica', idPrograma ?? 'todos'], () => obtenerNivelesRubrica(idPrograma))
+
+/** Agrupa el catálogo por programa y dimensión: `opciones[id_programa][dimension]`. */
+export function agruparNivelesRubrica(niveles = []) {
+  return niveles.reduce((mapa, nivel) => {
+    const porPrograma = mapa[nivel.id_programa] ?? {}
+    const porDimension = porPrograma[nivel.dimension] ?? []
+    return {
+      ...mapa,
+      [nivel.id_programa]: { ...porPrograma, [nivel.dimension]: [...porDimension, nivel] },
+    }
+  }, {})
+}

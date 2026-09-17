@@ -3,14 +3,15 @@ import Button from '../ui/Button'
 import Drawer from '../ui/Drawer'
 import EmptyState from '../ui/EmptyState'
 import useSyncStore from '../../store/syncStore'
+import { reintentarAhora } from '../../lib/colaOffline'
 
 /**
  * Detalle de la cola de envíos pendientes (RNF-001), que se abre desde el
  * SyncBadge de la barra superior (P2).
  *
- * TODO Fase 3: `useOfflineQueue` llenará esta lista desde IndexedDB y conectará
- * "Reintentar ahora". Hoy la cola siempre está vacía porque todavía no hay
- * pantallas de captura.
+ * La lista sale de la cola en IndexedDB: un envío por fila-semana, con los
+ * intentos que lleva y el último error. "Reintentar ahora" pone los contadores a
+ * cero y vuelve a procesarla.
  */
 export default function PanelSincronizacion({ abierto, onCerrar }) {
   const { items, sincronizando, ultimaSincronizacion } = useSyncStore()
@@ -30,7 +31,12 @@ export default function PanelSincronizacion({ abierto, onCerrar }) {
           <Button variant="outline" onClick={onCerrar}>
             Cerrar
           </Button>
-          <Button iconLeft={RefreshCw} loading={sincronizando} disabled={items.length === 0}>
+          <Button
+            iconLeft={RefreshCw}
+            loading={sincronizando}
+            disabled={items.length === 0}
+            onClick={reintentarAhora}
+          >
             Reintentar ahora
           </Button>
         </>
