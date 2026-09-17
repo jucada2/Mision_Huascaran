@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { ToastProvider } from './components/ui'
-import UiKitPage from './features/uiKit/UiKitPage'
+import AuthProvider from './auth/AuthProvider'
+import RutasApp from './rutas'
 
 /**
  * Router y proveedores de la aplicación.
@@ -13,32 +14,30 @@ import UiKitPage from './features/uiKit/UiKitPage'
  */
 const ESPERAS_MS = [1000, 4000, 9000]
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 3,
-      retryDelay: (intento) => ESPERAS_MS[Math.min(intento, ESPERAS_MS.length - 1)],
-      staleTime: 60_000,
-      refetchOnWindowFocus: false,
+export function crearQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 3,
+        retryDelay: (intento) => ESPERAS_MS[Math.min(intento, ESPERAS_MS.length - 1)],
+        staleTime: 60_000,
+        refetchOnWindowFocus: false,
+      },
+      mutations: { retry: 0 },
     },
-    mutations: { retry: 0 },
-  },
-})
+  })
+}
 
-const enDesarrollo = import.meta.env.DEV
+const queryClient = crearQueryClient()
 
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ToastProvider>
         <BrowserRouter>
-          <Routes>
-            {/* Catálogo visual del sistema de diseño. Solo en desarrollo (§11, Fase 1). */}
-            {enDesarrollo && <Route path="/_ui" element={<UiKitPage />} />}
-
-            {/* TODO Fase 2: /login, /403, shell por rol y guardas de ruta. */}
-            <Route path="*" element={<Navigate to={enDesarrollo ? '/_ui' : '/login'} replace />} />
-          </Routes>
+          <AuthProvider>
+            <RutasApp />
+          </AuthProvider>
         </BrowserRouter>
       </ToastProvider>
     </QueryClientProvider>

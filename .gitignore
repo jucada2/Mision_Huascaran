@@ -8,3 +8,4 @@ coverage
 .vscode/*
 !.vscode/extensions.json
 npm-debug.log*
+vite.config.js.timestamp-*

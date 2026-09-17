@@ -35,11 +35,13 @@ export default {
       keyframes: {
         'fade-in': { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
         'slide-in-right': { '0%': { transform: 'translateX(100%)' }, '100%': { transform: 'translateX(0)' } },
+        'slide-in-left': { '0%': { transform: 'translateX(-100%)' }, '100%': { transform: 'translateX(0)' } },
         'slide-up': { '0%': { transform: 'translateY(8px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
       },
       animation: {
         'fade-in': 'fade-in 150ms ease-out',
         'slide-in-right': 'slide-in-right 200ms ease-out',
+        'slide-in-left': 'slide-in-left 200ms ease-out',
         'slide-up': 'slide-up 180ms ease-out',
       },
     },
