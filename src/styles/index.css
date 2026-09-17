@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-surface-50 font-sans text-sm text-ink-700 antialiased;
+    margin: 0;
+    /* RNF-002: de 360px a 1920px sin desplazamiento horizontal. */
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-ink-900;
+  }
+
+  /* Números de tablas legibles y alineados (§4.2). */
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Foco visible obligatorio (§4.3). */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500 ring-offset-1;
+  }
+}
+
+@layer components {
+  .sicedu-scrollbar::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  .sicedu-scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-line-strong;
+  }
+  .sicedu-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+}
